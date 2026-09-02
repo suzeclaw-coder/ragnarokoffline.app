@@ -3,20 +3,20 @@
 //=============================================================
 
 // Map flags
-pvp_2vs2	mapflag	nomemo
-pvp_2vs2	mapflag	nosave	prontera,156,191
-pvp_2vs2	mapflag	nobranch
-pvp_2vs2	mapflag	pvp	off
+ordeal_1-1	mapflag	nomemo
+ordeal_1-1	mapflag	nosave	prontera,156,191
+ordeal_1-1	mapflag	nobranch
+ordeal_1-1	mapflag	pvp	off
+
+guild_vs1	mapflag	nomemo
+guild_vs1	mapflag	nosave	prontera,156,191
+guild_vs1	mapflag	nobranch
+guild_vs1	mapflag	pvp	off
 
 pvp_y_1-1	mapflag	nomemo
 pvp_y_1-1	mapflag	nosave	prontera,156,191
 pvp_y_1-1	mapflag	nobranch
 pvp_y_1-1	mapflag	pvp	off
-
-pvp_n_1-1	mapflag	nomemo
-pvp_n_1-1	mapflag	nosave	prontera,156,191
-pvp_n_1-1	mapflag	nobranch
-pvp_n_1-1	mapflag	pvp	off
 
 //-------------------------------------------------------------
 // Town Arena Attendant
@@ -26,21 +26,21 @@ prontera,138,195,4	script	MVP Arena Guide#prt	4_M_KNIGHT_BLACK,{
 	mes "Welcome, " + strcharinfo(0) + "!";
 	mes "Select an arena chamber to summon and fight MVP bosses:";
 	next;
-	switch(select("~ Arena 1: Compact Battle Ring (Best Visibility):~ Arena 2: Grand Marble Colosseum:~ Arena 3: Prontera Combat Arena:~ Cancel")) {
+	switch(select("~ Arena 1: Colosseum Arena (Recommended):~ Arena 2: Guild Battleground:~ Arena 3: Marble Colosseum:~ Cancel")) {
 	case 1:
 		specialeffect2 12;
-		warp "pvp_2vs2", 38, 30;
-		message strcharinfo(0), "[MVP Arena] Click the glowing Boss Obelisk in the center to summon any boss!";
+		warp "ordeal_1-1", 183, 180;
+		message strcharinfo(0), "[MVP Arena] Talk to the Boss Summoner right in front of you!";
 		end;
 	case 2:
 		specialeffect2 12;
-		warp "pvp_y_1-1", 100, 95;
-		message strcharinfo(0), "[MVP Arena] Click the glowing Boss Obelisk in the center to summon any boss!";
+		warp "guild_vs1", 10, 50;
+		message strcharinfo(0), "[MVP Arena] Talk to the Boss Summoner right in front of you!";
 		end;
 	case 3:
 		specialeffect2 12;
-		warp "pvp_n_1-1", 100, 95;
-		message strcharinfo(0), "[MVP Arena] Click the glowing Boss Obelisk in the center to summon any boss!";
+		warp "pvp_y_1-1", 100, 95;
+		message strcharinfo(0), "[MVP Arena] Talk to the Boss Summoner right in front of you!";
 		end;
 	case 4:
 		close;
@@ -57,10 +57,14 @@ izlude,110,118,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#izl	4_M_KNIGHT_B
 yuno,152,183,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#yuno	4_M_KNIGHT_BLACK
 
 //-------------------------------------------------------------
-// Arena 1: Compact Ring Obelisk (pvp_2vs2)
+// Arena 1: Colosseum Summoner (ordeal_1-1)
 //-------------------------------------------------------------
-pvp_2vs2,38,34,4	script	Boss Summoner#c1	4_ENERGY_ORB,{
-	callsub MainMenu, "pvp_2vs2", 38, 42;
+ordeal_1-1,183,184,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
+	callsub MainMenu, "ordeal_1-1", 183, 195;
+	end;
+
+OnInit:
+	waitingroom "⚔ MVP Boss Summoner ⚔", 0;
 	end;
 
 MainMenu:
@@ -68,7 +72,7 @@ MainMenu:
 	.@sx = getarg(1);
 	.@sy = getarg(2);
 	mes "[Boss Summoner]";
-	mes "Choose an MVP Boss to summon directly in the middle of the arena:";
+	mes "Choose an MVP Boss to summon directly in front of you:";
 	next;
 	switch(select("~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame / God MVPs:~ Summon by Custom Monster ID:~ Clear Arena (Despawn All):~ Full Heal & Buffs:~ Return to Prontera:~ Cancel")) {
 	case 1:
@@ -94,7 +98,7 @@ MainMenu:
 				monster .@map$, .@sx-2, .@sy, "--ja--", 1120, 1; // Ghostring
 				monster .@map$, .@sx, .@sy+2, "--ja--", 1090, 1; // Mastering
 				specialeffect2 154;
-				message strcharinfo(0), "Super Porings have arrived in the center!";
+				message strcharinfo(0), "Super Porings have arrived!";
 				close;
 		}
 		break;
@@ -182,7 +186,6 @@ SummonMob:
 	.@my = getarg(2);
 	.@mob_id = getarg(3);
 	.@mob_name$ = getarg(4);
-	// Spawn directly at the center coordinates
 	monster .@target_map$, .@mx, .@my, "--ja--", .@mob_id, 1;
 	specialeffect2 154;
 	message strcharinfo(0), .@mob_name$ + " has spawned in the center of the arena!";
@@ -190,17 +193,25 @@ SummonMob:
 }
 
 //-------------------------------------------------------------
-// Arena 2: Grand Colosseum Obelisk (pvp_y_1-1)
+// Arena 2: Guild Battleground Summoner (guild_vs1)
 //-------------------------------------------------------------
-pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_ENERGY_ORB,{
-	callsub BossSummoner#c1::MainMenu, "pvp_y_1-1", 100, 105;
+guild_vs1,12,50,4	script	Boss Summoner#g1	4_M_JOB_WIZARD,{
+	callsub BossSummoner#o1::MainMenu, "guild_vs1", 25, 50;
+	end;
+
+OnInit:
+	waitingroom "⚔ MVP Boss Summoner ⚔", 0;
 	end;
 }
 
 //-------------------------------------------------------------
-// Arena 3: Prontera Arena Obelisk (pvp_n_1-1)
+// Arena 3: Marble Colosseum Summoner (pvp_y_1-1)
 //-------------------------------------------------------------
-pvp_n_1-1,100,97,4	script	Boss Summoner#n1	4_ENERGY_ORB,{
-	callsub BossSummoner#c1::MainMenu, "pvp_n_1-1", 100, 105;
+pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_M_JOB_WIZARD,{
+	callsub BossSummoner#o1::MainMenu, "pvp_y_1-1", 100, 105;
+	end;
+
+OnInit:
+	waitingroom "⚔ MVP Boss Summoner ⚔", 0;
 	end;
 }
