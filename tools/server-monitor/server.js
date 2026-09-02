@@ -68,10 +68,15 @@ function getStatus(callback) {
 		if (!err && stdout) {
 			const lines = stdout.trim().split('\n');
 			for (const line of lines) {
-				const [name, status, ports] = line.split('\t');
-				if (services[name]) {
-					services[name].status = status.startsWith('Up') ? 'running' : 'stopped';
-					services[name].details = `${status} ${ports || ''}`.trim();
+				const parts = line.split('\t');
+				if (parts.length >= 2) {
+					const rawName = parts[0].replace(/[\[\]"\/]/g, '').trim();
+					const status = parts[1].trim();
+					const ports = parts[2] || '';
+					if (services[rawName]) {
+						services[rawName].status = status.startsWith('Up') ? 'running' : 'stopped';
+						services[rawName].details = `${status} ${ports}`.trim();
+					}
 				}
 			}
 		}
@@ -487,18 +492,51 @@ let eventSource = null;
 let autoScroll = true;
 const logsByService = { map: [], char: [], login: [], db: [], assets: [] };
 
+function parseAnsiToHtml(text) {
+  const ansiMap = {
+    '1;31': '#ff7b72',
+    '31': '#ff7b72',
+    '1;32': '#7ee787',
+    '32': '#7ee787',
+    '1;33': '#f2cc60',
+    '33': '#f2cc60',
+    '1;34': '#79c0ff',
+    '34': '#79c0ff',
+    '1;35': '#d2a8ff',
+    '35': '#d2a8ff',
+    '1;36': '#a5d6ff',
+    '36': '#a5d6ff',
+    '1;37': '#f0f6fc',
+    '37': '#c9d1d9',
+    '0;37': '#c9d1d9',
+    '0;32': '#7ee787',
+    '0;33': '#f2cc60',
+    '0;31': '#ff7b72',
+  };
+
+  let clean = text.replace(/(?:\\x1b\\[|\\[)K/g, '');
+  return clean.replace(/(?:\\x1b\\[|\\[)([0-9;]+)m/g, (match, code) => {
+    if (code === '0' || code === '00') return '</span>';
+    const color = ansiMap[code] || '#f0f6fc';
+    const weight = code.startsWith('1;') ? '600' : 'normal';
+    return '<span style="color: ' + color + '; font-weight: ' + weight + '">';
+  });
+}
+
 function formatLine(text, service) {
   const isErr = /error|fatal|fail|panic/i.test(text);
   const isWarn = /warning|warn/i.test(text);
-  const isInfo = /ready|success|connected|started|listening/i.test(text);
+  const isInfo = /ready|success|connected|started|listening|\\[Status\\]|\\[Info\\]/i.test(text);
   
   let cls = 'log-line';
   if (isErr) cls += ' err';
   else if (isWarn) cls += ' warn';
   else if (isInfo) cls += ' info';
 
-  const filter = document.getElementById('search-box').value.trim();
   let renderedText = escapeHTML(text);
+  renderedText = parseAnsiToHtml(renderedText);
+
+  const filter = document.getElementById('search-box').value.trim();
   if (filter) {
     const reg = new RegExp('(' + escapeRegex(filter) + ')', 'gi');
     renderedText = renderedText.replace(reg, '<span class="highlight">$1</span>');
