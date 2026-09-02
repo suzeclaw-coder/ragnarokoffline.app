@@ -3,20 +3,20 @@
 //=============================================================
 
 // Map flags
-ordeal_1-1	mapflag	nomemo
-ordeal_1-1	mapflag	nosave	prontera,156,191
-ordeal_1-1	mapflag	nobranch
-ordeal_1-1	mapflag	pvp	off
+pvp_y_1-1	mapflag	nomemo
+pvp_y_1-1	mapflag	nosave	prontera,156,191
+pvp_y_1-1	mapflag	nobranch
+pvp_y_1-1	mapflag	pvp	off
+
+pvp_n_1-1	mapflag	nomemo
+pvp_n_1-1	mapflag	nosave	prontera,156,191
+pvp_n_1-1	mapflag	nobranch
+pvp_n_1-1	mapflag	pvp	off
 
 guild_vs1	mapflag	nomemo
 guild_vs1	mapflag	nosave	prontera,156,191
 guild_vs1	mapflag	nobranch
 guild_vs1	mapflag	pvp	off
-
-pvp_y_1-1	mapflag	nomemo
-pvp_y_1-1	mapflag	nosave	prontera,156,191
-pvp_y_1-1	mapflag	nobranch
-pvp_y_1-1	mapflag	pvp	off
 
 //-------------------------------------------------------------
 // Town Arena Attendant
@@ -26,21 +26,21 @@ prontera,138,195,4	script	MVP Arena Guide#prt	4_M_KNIGHT_BLACK,{
 	mes "Welcome, " + strcharinfo(0) + "!";
 	mes "Select an arena chamber to summon and fight MVP bosses:";
 	next;
-	switch(select("~ Arena 1: Colosseum Arena (Recommended):~ Arena 2: Guild Battleground:~ Arena 3: Marble Colosseum:~ Cancel")) {
+	switch(select("~ Arena 1: Grand Marble Colosseum (Recommended):~ Arena 2: Prontera Combat Arena:~ Arena 3: Guild Battleground:~ Cancel")) {
 	case 1:
 		specialeffect2 12;
 		close2;
-		warp "ordeal_1-1", 183, 180;
+		warp "pvp_y_1-1", 100, 95;
 		end;
 	case 2:
 		specialeffect2 12;
 		close2;
-		warp "guild_vs1", 10, 50;
+		warp "pvp_n_1-1", 100, 95;
 		end;
 	case 3:
 		specialeffect2 12;
 		close2;
-		warp "pvp_y_1-1", 100, 95;
+		warp "guild_vs1", 10, 50;
 		end;
 	case 4:
 		close;
@@ -57,15 +57,15 @@ izlude,110,118,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#izl	4_M_KNIGHT_B
 yuno,152,183,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#yuno	4_M_KNIGHT_BLACK
 
 //-------------------------------------------------------------
-// Arena 1: Colosseum Summoner (ordeal_1-1)
+// Arena 1: Grand Marble Colosseum (pvp_y_1-1)
 //-------------------------------------------------------------
-ordeal_1-1,183,183,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
-	.@map$ = "ordeal_1-1";
-	.@sx = 183;
-	.@sy = 186;
+pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_M_JOB_WIZARD,{
+	.@map$ = "pvp_y_1-1";
+	.@sx = 100;
+	.@sy = 102;
 
 	mes "[Boss Summoner]";
-	mes "Choose an MVP Boss to summon right in front of you:";
+	mes "Choose an MVP Boss to summon directly in front of you:";
 	next;
 	switch(select("~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame / God MVPs:~ Summon by Custom Monster ID:~ Clear Arena (Despawn All):~ Full Heal & Buffs:~ Return to Prontera:~ Cancel")) {
 	case 1:
@@ -180,15 +180,15 @@ SummonMob:
 	.@my = getarg(2);
 	.@mob_id = getarg(3);
 	.@mob_name$ = getarg(4);
-	// Spawn directly in front of the player (3 cells north of NPC)
+	// Spawn directly in front of the player (5 cells north of NPC)
 	monster .@target_map$, .@mx, .@my, .@mob_name$, .@mob_id, 1;
 	specialeffect2 154;
 	message strcharinfo(0), .@mob_name$ + " has spawned right in front of you!";
 	close;
 }
 
-// Arena 2: Guild Battleground Summoner (guild_vs1)
-guild_vs1,12,50,4	duplicate(Boss Summoner#o1)	Boss Summoner#g1	4_M_JOB_WIZARD
+// Arena 2: Prontera Arena (pvp_n_1-1)
+pvp_n_1-1,100,97,4	duplicate(Boss Summoner#y1)	Boss Summoner#n1	4_M_JOB_WIZARD
 
-// Arena 3: Marble Colosseum Summoner (pvp_y_1-1)
-pvp_y_1-1,100,97,4	duplicate(Boss Summoner#o1)	Boss Summoner#y1	4_M_JOB_WIZARD
+// Arena 3: Guild Battleground (guild_vs1)
+guild_vs1,12,50,4	duplicate(Boss Summoner#y1)	Boss Summoner#g1	4_M_JOB_WIZARD
