@@ -56,13 +56,13 @@ yuno,152,183,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#yuno	4_M_KNIGHT_BL
 //-------------------------------------------------------------
 // Arena 1: Colosseum Summoner (ordeal_1-1)
 //-------------------------------------------------------------
-ordeal_1-1,183,184,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
+ordeal_1-1,183,183,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
 	.@map$ = "ordeal_1-1";
 	.@sx = 183;
-	.@sy = 195;
+	.@sy = 186;
 
 	mes "[Boss Summoner]";
-	mes "Choose an MVP Boss to summon directly in front of you:";
+	mes "Choose an MVP Boss to summon right in front of you:";
 	next;
 	switch(select("~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame / God MVPs:~ Summon by Custom Monster ID:~ Clear Arena (Despawn All):~ Full Heal & Buffs:~ Return to Prontera:~ Cancel")) {
 	case 1:
@@ -83,10 +83,10 @@ ordeal_1-1,183,184,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
 			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1038, "Osiris";
 			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1046, "Doppelganger";
 			case 13:
-				monster .@map$, .@sx, .@sy, "--ja--", 1096, 1; // Angeling
-				monster .@map$, .@sx+2, .@sy, "--ja--", 1582, 1; // Deviling
-				monster .@map$, .@sx-2, .@sy, "--ja--", 1120, 1; // Ghostring
-				monster .@map$, .@sx, .@sy+2, "--ja--", 1090, 1; // Mastering
+				monster .@map$, .@sx, .@sy, "Angeling", 1096, 1;
+				monster .@map$, .@sx+2, .@sy, "Deviling", 1582, 1;
+				monster .@map$, .@sx-2, .@sy, "Ghostring", 1120, 1;
+				monster .@map$, .@sx, .@sy+2, "Mastering", 1090, 1;
 				specialeffect2 154;
 				message strcharinfo(0), "Super Porings have arrived!";
 				close;
@@ -176,9 +176,10 @@ SummonMob:
 	.@my = getarg(2);
 	.@mob_id = getarg(3);
 	.@mob_name$ = getarg(4);
-	monster .@target_map$, .@mx, .@my, "--ja--", .@mob_id, 1;
+	// Spawn directly in front of the player (3 cells north of NPC)
+	monster .@target_map$, .@mx, .@my, .@mob_name$, .@mob_id, 1;
 	specialeffect2 154;
-	message strcharinfo(0), .@mob_name$ + " has spawned in the center of the arena!";
+	message strcharinfo(0), .@mob_name$ + " has spawned right in front of you!";
 	close;
 }
 
