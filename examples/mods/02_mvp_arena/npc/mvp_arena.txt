@@ -1,8 +1,7 @@
 //=============================================================
-// MVP Boss Summoning Mod (No-Teleport Guaranteed)
+// MVP Boss Summoning Mod
 //=============================================================
 
-// Prevent monsters from casting Teleport / Fly Wing AI on these maps
 prontera	mapflag	monster_noteleport
 prt_fild08	mapflag	monster_noteleport
 prt_fild08	mapflag	nomemo
@@ -14,7 +13,7 @@ prt_fild08	mapflag	nobranch
 prontera,138,195,4	script	MVP Boss Summoner#prt	4_M_JOB_WIZARD,{
 	mes "[MVP Boss Summoner]";
 	mes "Hello, " + strcharinfo(0) + "!";
-	mes "I can summon any MVP boss right next to you (teleportation is disabled so they cannot escape).";
+	mes "I can summon any MVP boss right beside you.";
 	next;
 	switch(select("~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame MVPs:~ Warp to Boss Field (prt_fild08):~ Clear All Spawned Monsters:~ Full Heal & Buffs:~ Cancel")) {
 	case 1:
@@ -35,11 +34,12 @@ prontera,138,195,4	script	MVP Boss Summoner#prt	4_M_JOB_WIZARD,{
 			case 11: callsub SummonMob, 1038, "Osiris";
 			case 12: callsub SummonMob, 1046, "Doppelganger";
 			case 13:
-				getmapxy(.@m$, .@px, .@py, 0);
-				monster .@m$, .@px+1, .@py, "Angeling", 1096, 1;
-				monster .@m$, .@px-1, .@py, "Deviling", 1582, 1;
-				monster .@m$, .@px, .@py+1, "Ghostring", 1120, 1;
-				monster .@m$, .@px, .@py-1, "Mastering", 1090, 1;
+				.@map$ = strcharinfo(3);
+				getmapxy(.@map$, .@px, .@py, BL_PC);
+				monster .@map$, .@px+1, .@py, "Angeling", 1096, 1;
+				monster .@map$, .@px-1, .@py, "Deviling", 1582, 1;
+				monster .@map$, .@px, .@py+1, "Ghostring", 1120, 1;
+				monster .@map$, .@px, .@py-1, "Mastering", 1090, 1;
 				specialeffect2 154;
 				message strcharinfo(0), "Super Porings have spawned around you!";
 				close;
@@ -95,9 +95,10 @@ prontera,138,195,4	script	MVP Boss Summoner#prt	4_M_JOB_WIZARD,{
 		end;
 
 	case 5:
-		killmonster strcharinfo(3), "All";
+		.@map$ = strcharinfo(3);
+		killmonster .@map$, "All";
 		specialeffect2 154;
-		message strcharinfo(0), "All spawned monsters on this map have been cleared!";
+		message strcharinfo(0), "All spawned monsters on " + .@map$ + " have been cleared!";
 		close;
 
 	case 6:
@@ -119,9 +120,9 @@ prontera,138,195,4	script	MVP Boss Summoner#prt	4_M_JOB_WIZARD,{
 SummonMob:
 	.@mob_id = getarg(0);
 	.@mob_name$ = getarg(1);
-	// Get current player position and spawn 1 cell next to them
-	getmapxy(.@m$, .@px, .@py, 0);
-	monster .@m$, .@px+1, .@py, .@mob_name$, .@mob_id, 1;
+	.@map$ = strcharinfo(3);
+	getmapxy(.@map$, .@px, .@py, BL_PC);
+	monster .@map$, .@px, .@py, .@mob_name$, .@mob_id, 1;
 	specialeffect2 154;
 	message strcharinfo(0), .@mob_name$ + " has spawned right beside you!";
 	close;
