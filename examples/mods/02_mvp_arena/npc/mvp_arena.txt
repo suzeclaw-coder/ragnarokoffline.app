@@ -30,17 +30,14 @@ prontera,138,195,4	script	MVP Arena Guide#prt	4_M_KNIGHT_BLACK,{
 	case 1:
 		specialeffect2 12;
 		warp "ordeal_1-1", 183, 180;
-		message strcharinfo(0), "[MVP Arena] Talk to the Boss Summoner right in front of you!";
 		end;
 	case 2:
 		specialeffect2 12;
 		warp "guild_vs1", 10, 50;
-		message strcharinfo(0), "[MVP Arena] Talk to the Boss Summoner right in front of you!";
 		end;
 	case 3:
 		specialeffect2 12;
 		warp "pvp_y_1-1", 100, 95;
-		message strcharinfo(0), "[MVP Arena] Talk to the Boss Summoner right in front of you!";
 		end;
 	case 4:
 		close;
@@ -60,17 +57,10 @@ yuno,152,183,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#yuno	4_M_KNIGHT_BL
 // Arena 1: Colosseum Summoner (ordeal_1-1)
 //-------------------------------------------------------------
 ordeal_1-1,183,184,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
-	callsub MainMenu, "ordeal_1-1", 183, 195;
-	end;
+	.@map$ = "ordeal_1-1";
+	.@sx = 183;
+	.@sy = 195;
 
-OnInit:
-	waitingroom "⚔ MVP Boss Summoner ⚔", 0;
-	end;
-
-MainMenu:
-	.@map$ = getarg(0);
-	.@sx = getarg(1);
-	.@sy = getarg(2);
 	mes "[Boss Summoner]";
 	mes "Choose an MVP Boss to summon directly in front of you:";
 	next;
@@ -192,26 +182,8 @@ SummonMob:
 	close;
 }
 
-//-------------------------------------------------------------
 // Arena 2: Guild Battleground Summoner (guild_vs1)
-//-------------------------------------------------------------
-guild_vs1,12,50,4	script	Boss Summoner#g1	4_M_JOB_WIZARD,{
-	callsub BossSummoner#o1::MainMenu, "guild_vs1", 25, 50;
-	end;
+guild_vs1,12,50,4	duplicate(Boss Summoner#o1)	Boss Summoner#g1	4_M_JOB_WIZARD
 
-OnInit:
-	waitingroom "⚔ MVP Boss Summoner ⚔", 0;
-	end;
-}
-
-//-------------------------------------------------------------
 // Arena 3: Marble Colosseum Summoner (pvp_y_1-1)
-//-------------------------------------------------------------
-pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_M_JOB_WIZARD,{
-	callsub BossSummoner#o1::MainMenu, "pvp_y_1-1", 100, 105;
-	end;
-
-OnInit:
-	waitingroom "⚔ MVP Boss Summoner ⚔", 0;
-	end;
-}
+pvp_y_1-1,100,97,4	duplicate(Boss Summoner#o1)	Boss Summoner#y1	4_M_JOB_WIZARD
