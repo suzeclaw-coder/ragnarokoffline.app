@@ -8,6 +8,7 @@
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
+    "monitor": "node tools/server-monitor/server.js",
     "dist": "electron-builder --mac"
   },
   "devDependencies": {
