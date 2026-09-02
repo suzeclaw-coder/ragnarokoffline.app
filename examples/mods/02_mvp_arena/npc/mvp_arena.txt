@@ -1,158 +1,104 @@
 //=============================================================
-// MVP Boss Summoning Arena Mod
+// MVP Boss Summoning Mod (Clean & Simple)
 //=============================================================
 
-// Map flags
-pvp_y_1-1	mapflag	nomemo
-pvp_y_1-1	mapflag	nosave	prontera,156,191
-pvp_y_1-1	mapflag	nobranch
-pvp_y_1-1	mapflag	pvp	off
-
-pvp_n_1-1	mapflag	nomemo
-pvp_n_1-1	mapflag	nosave	prontera,156,191
-pvp_n_1-1	mapflag	nobranch
-pvp_n_1-1	mapflag	pvp	off
-
-guild_vs1	mapflag	nomemo
-guild_vs1	mapflag	nosave	prontera,156,191
-guild_vs1	mapflag	nobranch
-guild_vs1	mapflag	pvp	off
+// Map flags for Boss Field (prt_fild08)
+prt_fild08	mapflag	nomemo
+prt_fild08	mapflag	nobranch
 
 //-------------------------------------------------------------
-// Town Arena Attendant
+// Town Boss Summoner (Prontera Center - No Warping Needed!)
 //-------------------------------------------------------------
-prontera,138,195,4	script	MVP Arena Guide#prt	4_M_KNIGHT_BLACK,{
-	mes "[MVP Arena Guide]";
-	mes "Welcome, " + strcharinfo(0) + "!";
-	mes "Select an arena chamber to summon and fight MVP bosses:";
+prontera,138,195,4	script	MVP Boss Summoner#prt	4_M_JOB_WIZARD,{
+	mes "[MVP Boss Summoner]";
+	mes "Hello, " + strcharinfo(0) + "!";
+	mes "Would you like to summon an MVP Boss right here in Prontera Field, or spawn one at your location?";
 	next;
-	switch(select("~ Arena 1: Grand Marble Colosseum (Recommended):~ Arena 2: Prontera Combat Arena:~ Arena 3: Guild Battleground:~ Cancel")) {
+	switch(select("~ Warp to Boss Battle Field (prt_fild08):~ Summon Boss Here Now:~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame MVPs:~ Clear All Monsters:~ Full Heal & Buffs:~ Cancel")) {
 	case 1:
 		specialeffect2 12;
 		close2;
-		warp "pvp_y_1-1", 100, 95;
+		warp "prt_fild08", 170, 360;
 		end;
+
 	case 2:
-		specialeffect2 12;
-		close2;
-		warp "pvp_n_1-1", 100, 95;
-		end;
 	case 3:
-		specialeffect2 12;
-		close2;
-		warp "guild_vs1", 10, 50;
-		end;
-	case 4:
-		close;
-	}
-	end;
-}
-
-// Town duplicates
-morocc,141,96,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#mor	4_M_KNIGHT_BLACK
-geffen,102,62,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#gef	4_M_KNIGHT_BLACK
-payon,142,234,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#pay	4_M_KNIGHT_BLACK
-alberta,10,234,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#alb	4_M_KNIGHT_BLACK
-izlude,110,118,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#izl	4_M_KNIGHT_BLACK
-yuno,152,183,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#yuno	4_M_KNIGHT_BLACK
-
-//-------------------------------------------------------------
-// Arena 1: Grand Marble Colosseum (pvp_y_1-1)
-//-------------------------------------------------------------
-pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_M_JOB_WIZARD,{
-	.@map$ = "pvp_y_1-1";
-	.@sx = 100;
-	.@sy = 102;
-
-	mes "[Boss Summoner]";
-	mes "Choose an MVP Boss to summon directly in front of you:";
-	next;
-	switch(select("~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame / God MVPs:~ Summon by Custom Monster ID:~ Clear Arena (Despawn All):~ Full Heal & Buffs:~ Return to Prontera:~ Cancel")) {
-	case 1:
 		mes "[Tier 1: Classic MVPs]";
 		mes "Select a boss:";
 		next;
-		switch(select("Golden Thief Bug (GTB):Eddga:Moonlight Flower:Maya:Phreeoni:Orc Hero:Orc Lord:Drake:Mistress:Pharaoh:Osiris:Doppelganger:Angeling / Deviling / Ghostring / Mastering")) {
-			case 1: callsub SummonMob, .@map$, .@sx, .@sy, 1086, "Golden Thief Bug";
-			case 2: callsub SummonMob, .@map$, .@sx, .@sy, 1115, "Eddga";
-			case 3: callsub SummonMob, .@map$, .@sx, .@sy, 1150, "Moonlight Flower";
-			case 4: callsub SummonMob, .@map$, .@sx, .@sy, 1147, "Maya";
-			case 5: callsub SummonMob, .@map$, .@sx, .@sy, 1159, "Phreeoni";
-			case 6: callsub SummonMob, .@map$, .@sx, .@sy, 1087, "Orc Hero";
-			case 7: callsub SummonMob, .@map$, .@sx, .@sy, 1190, "Orc Lord";
-			case 8: callsub SummonMob, .@map$, .@sx, .@sy, 1112, "Drake";
-			case 9: callsub SummonMob, .@map$, .@sx, .@sy, 1059, "Mistress";
-			case 10: callsub SummonMob, .@map$, .@sx, .@sy, 1157, "Pharaoh";
-			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1038, "Osiris";
-			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1046, "Doppelganger";
+		switch(select("Golden Thief Bug:Eddga:Moonlight Flower:Maya:Phreeoni:Orc Hero:Orc Lord:Drake:Mistress:Pharaoh:Osiris:Doppelganger:Super Porings (Angeling/Deviling/Ghostring/Mastering)")) {
+			case 1: callsub SummonMob, 1086, "Golden Thief Bug";
+			case 2: callsub SummonMob, 1115, "Eddga";
+			case 3: callsub SummonMob, 1150, "Moonlight Flower";
+			case 4: callsub SummonMob, 1147, "Maya";
+			case 5: callsub SummonMob, 1159, "Phreeoni";
+			case 6: callsub SummonMob, 1087, "Orc Hero";
+			case 7: callsub SummonMob, 1190, "Orc Lord";
+			case 8: callsub SummonMob, 1112, "Drake";
+			case 9: callsub SummonMob, 1059, "Mistress";
+			case 10: callsub SummonMob, 1157, "Pharaoh";
+			case 11: callsub SummonMob, 1038, "Osiris";
+			case 12: callsub SummonMob, 1046, "Doppelganger";
 			case 13:
-				monster .@map$, .@sx, .@sy, "Angeling", 1096, 1;
-				monster .@map$, .@sx+2, .@sy, "Deviling", 1582, 1;
-				monster .@map$, .@sx-2, .@sy, "Ghostring", 1120, 1;
-				monster .@map$, .@sx, .@sy+2, "Mastering", 1090, 1;
+				monster strcharinfo(3), 0, 0, "Angeling", 1096, 1;
+				monster strcharinfo(3), 0, 0, "Deviling", 1582, 1;
+				monster strcharinfo(3), 0, 0, "Ghostring", 1120, 1;
+				monster strcharinfo(3), 0, 0, "Mastering", 1090, 1;
 				specialeffect2 154;
 				message strcharinfo(0), "Super Porings have arrived!";
 				close;
 		}
 		break;
 
-	case 2:
+	case 4:
 		mes "[Tier 2: Advanced MVPs]";
 		mes "Select a boss:";
 		next;
 		switch(select("Baphomet:Dark Lord:Lord of Death:Stormy Knight:Garm (Hatii):Evil Snake Lord:Incantation Samurai:Turtle General:Tao Gunka:RSX 0806:Amon Ra:Lady Tanee:Atroce:Ktullanux")) {
-			case 1: callsub SummonMob, .@map$, .@sx, .@sy, 1039, "Baphomet";
-			case 2: callsub SummonMob, .@map$, .@sx, .@sy, 1272, "Dark Lord";
-			case 3: callsub SummonMob, .@map$, .@sx, .@sy, 1373, "Lord of Death";
-			case 4: callsub SummonMob, .@map$, .@sx, .@sy, 1252, "Stormy Knight";
-			case 5: callsub SummonMob, .@map$, .@sx, .@sy, 1251, "Garm";
-			case 6: callsub SummonMob, .@map$, .@sx, .@sy, 1418, "Evil Snake Lord";
-			case 7: callsub SummonMob, .@map$, .@sx, .@sy, 1492, "Incantation Samurai";
-			case 8: callsub SummonMob, .@map$, .@sx, .@sy, 1312, "Turtle General";
-			case 9: callsub SummonMob, .@map$, .@sx, .@sy, 1583, "Tao Gunka";
-			case 10: callsub SummonMob, .@map$, .@sx, .@sy, 1623, "RSX 0806";
-			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1511, "Amon Ra";
-			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1688, "Lady Tanee";
-			case 13: callsub SummonMob, .@map$, .@sx, .@sy, 1785, "Atroce";
-			case 14: callsub SummonMob, .@map$, .@sx, .@sy, 1779, "Ktullanux";
+			case 1: callsub SummonMob, 1039, "Baphomet";
+			case 2: callsub SummonMob, 1272, "Dark Lord";
+			case 3: callsub SummonMob, 1373, "Lord of Death";
+			case 4: callsub SummonMob, 1252, "Stormy Knight";
+			case 5: callsub SummonMob, 1251, "Garm";
+			case 6: callsub SummonMob, 1418, "Evil Snake Lord";
+			case 7: callsub SummonMob, 1492, "Incantation Samurai";
+			case 8: callsub SummonMob, 1312, "Turtle General";
+			case 9: callsub SummonMob, 1583, "Tao Gunka";
+			case 10: callsub SummonMob, 1623, "RSX 0806";
+			case 11: callsub SummonMob, 1511, "Amon Ra";
+			case 12: callsub SummonMob, 1688, "Lady Tanee";
+			case 13: callsub SummonMob, 1785, "Atroce";
+			case 14: callsub SummonMob, 1779, "Ktullanux";
 		}
-		break;
-
-	case 3:
-		mes "[Tier 3: Endgame / God MVPs]";
-		mes "Select a boss:";
-		next;
-		switch(select("Valkyrie Randgris:Ifrit:Beelzebub:Fallen Bishop Hibram:Gloom Under Night:Kiel D-01:Nidhoggur's Shadow:Memory of Thanatos:Naght Sieger:Detale:Egnigem Cenia (Biolab):Wounded Morocc")) {
-			case 1: callsub SummonMob, .@map$, .@sx, .@sy, 1751, "Valkyrie Randgris";
-			case 2: callsub SummonMob, .@map$, .@sx, .@sy, 1832, "Ifrit";
-			case 3: callsub SummonMob, .@map$, .@sx, .@sy, 1874, "Beelzebub";
-			case 4: callsub SummonMob, .@map$, .@sx, .@sy, 1871, "Fallen Bishop Hibram";
-			case 5: callsub SummonMob, .@map$, .@sx, .@sy, 1768, "Gloom Under Night";
-			case 6: callsub SummonMob, .@map$, .@sx, .@sy, 1734, "Kiel D-01";
-			case 7: callsub SummonMob, .@map$, .@sx, .@sy, 2022, "Nidhoggur's Shadow";
-			case 8: callsub SummonMob, .@map$, .@sx, .@sy, 1708, "Memory of Thanatos";
-			case 9: callsub SummonMob, .@map$, .@sx, .@sy, 1957, "Naght Sieger";
-			case 10: callsub SummonMob, .@map$, .@sx, .@sy, 1719, "Detale";
-			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1658, "Egnigem Cenia";
-			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1917, "Wounded Morocc";
-		}
-		break;
-
-	case 4:
-		mes "[Custom Monster Summon]";
-		mes "Enter the Monster ID number (e.g. 1039 for Baphomet, 1751 for Valkyrie):";
-		next;
-		input .@mob_id, 1001, 3500;
-		callsub SummonMob, .@map$, .@sx, .@sy, .@mob_id, "Monster #" + .@mob_id;
 		break;
 
 	case 5:
-		killmonster .@map$, "All";
-		specialeffect2 154;
-		message strcharinfo(0), "All arena monsters have been cleared!";
-		close;
+		mes "[Tier 3: Endgame MVPs]";
+		mes "Select a boss:";
+		next;
+		switch(select("Valkyrie Randgris:Ifrit:Beelzebub:Fallen Bishop Hibram:Gloom Under Night:Kiel D-01:Nidhoggur's Shadow:Memory of Thanatos:Naght Sieger:Detale:Egnigem Cenia (Biolab):Wounded Morocc")) {
+			case 1: callsub SummonMob, 1751, "Valkyrie Randgris";
+			case 2: callsub SummonMob, 1832, "Ifrit";
+			case 3: callsub SummonMob, 1874, "Beelzebub";
+			case 4: callsub SummonMob, 1871, "Fallen Bishop Hibram";
+			case 5: callsub SummonMob, 1768, "Gloom Under Night";
+			case 6: callsub SummonMob, 1734, "Kiel D-01";
+			case 7: callsub SummonMob, 2022, "Nidhoggur's Shadow";
+			case 8: callsub SummonMob, 1708, "Memory of Thanatos";
+			case 9: callsub SummonMob, 1957, "Naght Sieger";
+			case 10: callsub SummonMob, 1719, "Detale";
+			case 11: callsub SummonMob, 1658, "Egnigem Cenia";
+			case 12: callsub SummonMob, 1917, "Wounded Morocc";
+		}
+		break;
 
 	case 6:
+		killmonster strcharinfo(3), "All";
+		specialeffect2 154;
+		message strcharinfo(0), "All spawned monsters on this map have been cleared!";
+		close;
+
+	case 7:
 		percentheal 100, 100;
 		sc_start SC_BLESSING, 3600000, 10;
 		sc_start SC_INC_AGI, 3600000, 10;
@@ -163,32 +109,20 @@ pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_M_JOB_WIZARD,{
 		message strcharinfo(0), "Full HP/SP and buffs applied!";
 		close;
 
-	case 7:
-		specialeffect2 12;
-		close2;
-		warp "prontera", 156, 191;
-		end;
-
 	case 8:
 		close;
 	}
 	end;
 
 SummonMob:
-	.@target_map$ = getarg(0);
-	.@mx = getarg(1);
-	.@my = getarg(2);
-	.@mob_id = getarg(3);
-	.@mob_name$ = getarg(4);
-	// Spawn directly in front of the player (5 cells north of NPC)
-	monster .@target_map$, .@mx, .@my, .@mob_name$, .@mob_id, 1;
+	.@mob_id = getarg(0);
+	.@mob_name$ = getarg(1);
+	// Spawn directly near the player on current map
+	monster strcharinfo(3), 0, 0, .@mob_name$, .@mob_id, 1;
 	specialeffect2 154;
-	message strcharinfo(0), .@mob_name$ + " has spawned right in front of you!";
+	message strcharinfo(0), .@mob_name$ + " has spawned nearby!";
 	close;
 }
 
-// Arena 2: Prontera Arena (pvp_n_1-1)
-pvp_n_1-1,100,97,4	duplicate(Boss Summoner#y1)	Boss Summoner#n1	4_M_JOB_WIZARD
-
-// Arena 3: Guild Battleground (guild_vs1)
-guild_vs1,12,50,4	duplicate(Boss Summoner#y1)	Boss Summoner#g1	4_M_JOB_WIZARD
+// Spawns also in Prontera Field Leveling Area
+prt_fild08,170,362,4	duplicate(MVP Boss Summoner#prt)	MVP Boss Summoner#fild	4_M_JOB_WIZARD
