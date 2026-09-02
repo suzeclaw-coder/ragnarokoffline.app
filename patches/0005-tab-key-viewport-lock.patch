@@ -1,0 +1,27 @@
+From: RagnarokMac <noreply@ragnarokmac>
+Subject: [PATCH] Prevent Tab key viewport scrolling and lock window scroll at (0,0)
+
+Pressing Tab when focus is not inside an active input element caused Chromium
+to navigate focus to off-screen elements, triggering native scrollIntoView()
+and scrolling the entire WebGL canvas and UI out of view into a black screen.
+
+--- a/src/Controls/KeyEventHandler.js
++++ b/src/Controls/KeyEventHandler.js
+@@
+ 	onKeyEvent = (event) => {
+ 		KEYS.SHIFT = !!event.shiftKey;
+ 		KEYS.CTRL = !!event.ctrlKey;
+ 		KEYS.ALT = !!event.altKey;
++		if (event.type === "keydown" && (event.key === "Tab" || event.keyCode === 9 || event.which === 9)) {
++			const el = KEYS.getDeepActiveElement();
++			const isInput = el && (/^(INPUT|TEXTAREA|SELECT)$/i.test(el.tagName) || el.isContentEditable);
++			if (!isInput) {
++				event.preventDefault();
++			}
++		}
+ 	};
+ 	window.addEventListener("keydown", onKeyEvent);
+ 	window.addEventListener("keyup", onKeyEvent);
++	window.addEventListener("scroll", () => {
++		if (window.scrollX !== 0 || window.scrollY !== 0) window.scrollTo(0, 0);
++	});

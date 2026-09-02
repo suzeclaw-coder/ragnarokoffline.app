@@ -107,6 +107,49 @@ if "KeyboardMove" not in s:
     s = s.replace("\t\t\tMapControl.init();", "\t\t\tMapControl.init();\n\t\t\tKeyboardMove.init();")
     p.write_text(s)
     print("patched MapEngine.js (keyboard movement)")
-else:
-    print("MapEngine.js already patched")
+# 0005 - Prevent Tab key viewport scrolling and lock window scroll at (0,0).
+p = rb / "src/Controls/KeyEventHandler.js"
+if p.exists():
+    s = p.read_text()
+    old = """	onKeyEvent = (event) => {
+		KEYS.SHIFT = !event.shiftKey;
+		KEYS.CTRL = !event.ctrlKey;
+		KEYS.ALT = !event.altKey;
+	};
+	window.addEventListener("keydown", onKeyEvent);
+	window.addEventListener("keyup", onKeyEvent);"""
+    new = """	onKeyEvent = (event) => {
+		KEYS.SHIFT = !event.shiftKey;
+		KEYS.CTRL = !event.ctrlKey;
+		KEYS.ALT = !event.altKey;
+		if (event.type === "keydown" && (event.key === "Tab" || event.keyCode === 9 || event.which === 9)) {
+			const el = KEYS.getDeepActiveElement();
+			const isInput = el && (/^(INPUT|TEXTAREA|SELECT)$/i.test(el.tagName) || el.isContentEditable);
+			if (!isInput) {
+				event.preventDefault();
+			}
+		}
+	};
+	window.addEventListener("keydown", onKeyEvent);
+	window.addEventListener("keyup", onKeyEvent);
+	window.addEventListener("scroll", () => {
+		if (window.scrollX !== 0 || window.scrollY !== 0) window.scrollTo(0, 0);
+	});"""
+    if "event.key === \"Tab\"" in s:
+        print("KeyEventHandler.js already patched")
+    elif old in s:
+        p.write_text(s.replace(old, new, 1))
+        print("patched KeyEventHandler.js (tab key viewport lock)")
+
+# 0006 - DB: remove redundant onLoad() callback for PetEvolutionCln.
+p = rb / "src/DB/DB.js"
+if p.exists():
+    s = p.read_text()
+    old = "tryLoadLuaAliases(loadPetEvolution, getSystemAliases('System/PetEvolutionCln.lub'), null, onLoad());"
+    new = "tryLoadLuaAliases(loadPetEvolution, getSystemAliases('System/PetEvolutionCln.lub'), null, null);"
+    if "getSystemAliases('System/PetEvolutionCln.lub'), null, null);" in s:
+        print("DB.js already patched")
+    elif old in s:
+        p.write_text(s.replace(old, new, 1))
+        print("patched DB.js (pet evolution lazy init callback)")
 PY

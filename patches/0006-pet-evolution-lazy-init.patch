@@ -1,0 +1,19 @@
+From: RagnarokMac <noreply@ragnarokmac>
+Subject: [PATCH] DB: remove redundant onLoad() callback for PetEvolutionCln
+
+PetEvolutionCln was triggering duplicate onLoad closures during lazy database
+initialization, causing an asynchronous count mismatch.
+
+--- a/src/DB/DB.js
++++ b/src/DB/DB.js
+@@
+ 				if (PacketVerManager.value >= 20141008) {
+ 					loadLuaTable([DB.LUA_PATH + 'datainfo/npcidentity.lub', DB.LUA_PATH + 'datainfo/jobname.lub'], 'JobNameTable', function(json) {
+ 						Object.assign(MonsterTable, json);
+ 					}, onLoad(), function() {
+ 						loadPetInfo(DB.LUA_PATH + 'datainfo/petinfo.lub', null, function() {
+-							tryLoadLuaAliases(loadPetEvolution, getSystemAliases('System/PetEvolutionCln.lub'), null, onLoad());
++							tryLoadLuaAliases(loadPetEvolution, getSystemAliases('System/PetEvolutionCln.lub'), null, null);
+ 						});
+ 					});
+ 				}

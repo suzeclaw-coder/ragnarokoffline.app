@@ -1,0 +1,20 @@
+From: RagnarokMac <noreply@ragnarokmac>
+Subject: [PATCH] CharSelect: reset the canvas context list on init
+
+_ctx is module-level and pushed to in Component.init without ever being
+cleared, so re-entering character select adds another context per slot. The
+render loop does clearRect + draw once per entry, and sprite draws land
+asynchronously, so the later ones arrive after the earlier clears - the
+character is drawn twice, slightly offset. That is the doubled head in the
+character select and creation screens (upstream #1350).
+
+--- a/src/UI/Components/CharSelect/CharSelectCommon.js
++++ b/src/UI/Components/CharSelect/CharSelectCommon.js
+@@
+ 	Component.init = function init() {
+ 		const root = this.getRoot();
++
++		// init() runs again every time character select is re-entered; without
++		// this the contexts accumulate and each character is drawn once per
++		// stale entry.
++		_ctx.length = 0;
