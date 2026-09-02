@@ -1,7 +1,7 @@
 //=============================================================
-// Universal Healer & Buffer
+// Universal Instant Healer & Buffer
 //=============================================================
-prontera,156,195,4	script	Healer & Buffer#prt	4_F_NURSE,{
+prontera,156,195,4	script	Healer & Buffer#prt	4_F_NURSE,2,2,{
 	percentheal 100,100;
 	sc_end SC_POISON;
 	sc_end SC_SILENCE;
@@ -23,22 +23,22 @@ prontera,156,195,4	script	Healer & Buffer#prt	4_F_NURSE,{
 	specialeffect2 20; // Heal
 	specialeffect2 37; // Blessing
 	specialeffect2 42; // Inc AGI
-	message strcharinfo(0), "You are fully healed, buffed, and equipment repaired!";
-	close;
+	dispbottom "You have been fully healed, buffed, and equipment repaired!";
+	end;
 }
 
 // Duplicate spawns in other major towns
-morocc,159,96,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#mor	4_F_NURSE
-geffen,120,62,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#gef	4_F_NURSE
-payon,160,234,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#pay	4_F_NURSE
-alberta,28,234,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#alb	4_F_NURSE
-izlude,128,118,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#izl	4_F_NURSE
-aldebaran,140,119,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#ald	4_F_NURSE
-xmas,143,136,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#xmas	4_F_NURSE
-comodo,188,162,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#com	4_F_NURSE
-yuno,164,183,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#yuno	4_F_NURSE
-rachel,130,110,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#rac	4_F_NURSE
-lighthalzen,158,100,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#lhz	4_F_NURSE
-einbroch,242,205,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#ein	4_F_NURSE
-hugel,96,145,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#hug	4_F_NURSE
-veins,216,123,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#vei	4_F_NURSE
+morocc,159,96,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#mor	4_F_NURSE,2,2
+geffen,120,62,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#gef	4_F_NURSE,2,2
+payon,160,234,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#pay	4_F_NURSE,2,2
+alberta,28,234,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#alb	4_F_NURSE,2,2
+izlude,128,118,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#izl	4_F_NURSE,2,2
+aldebaran,140,119,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#ald	4_F_NURSE,2,2
+xmas,143,136,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#xmas	4_F_NURSE,2,2
+comodo,188,162,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#com	4_F_NURSE,2,2
+yuno,164,183,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#yuno	4_F_NURSE,2,2
+rachel,130,110,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#rac	4_F_NURSE,2,2
+lighthalzen,158,100,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#lhz	4_F_NURSE,2,2
+einbroch,242,205,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#ein	4_F_NURSE,2,2
+hugel,96,145,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#hug	4_F_NURSE,2,2
+veins,216,123,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#vei	4_F_NURSE,2,2
