@@ -29,14 +29,17 @@ prontera,138,195,4	script	MVP Arena Guide#prt	4_M_KNIGHT_BLACK,{
 	switch(select("~ Arena 1: Colosseum Arena (Recommended):~ Arena 2: Guild Battleground:~ Arena 3: Marble Colosseum:~ Cancel")) {
 	case 1:
 		specialeffect2 12;
+		close2;
 		warp "ordeal_1-1", 183, 180;
 		end;
 	case 2:
 		specialeffect2 12;
+		close2;
 		warp "guild_vs1", 10, 50;
 		end;
 	case 3:
 		specialeffect2 12;
+		close2;
 		warp "pvp_y_1-1", 100, 95;
 		end;
 	case 4:
@@ -162,6 +165,7 @@ ordeal_1-1,183,183,4	script	Boss Summoner#o1	4_M_JOB_WIZARD,{
 
 	case 7:
 		specialeffect2 12;
+		close2;
 		warp "prontera", 156, 191;
 		end;
 

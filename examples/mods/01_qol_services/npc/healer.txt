@@ -24,7 +24,7 @@ prontera,156,195,4	script	Healer & Buffer#prt	4_F_NURSE,{
 	specialeffect2 37; // Blessing
 	specialeffect2 42; // Inc AGI
 	message strcharinfo(0), "You are fully healed, buffed, and equipment repaired!";
-	end;
+	close;
 }
 
 // Duplicate spawns in other major towns

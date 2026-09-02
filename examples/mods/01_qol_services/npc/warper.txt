@@ -107,6 +107,7 @@ prontera,153,195,4	script	Universal Warper#prt	4_M_JOB_WIZARD,{
 			mes "You haven't warped anywhere yet!";
 			close;
 		}
+		close2;
 		warp .@last_map$[0], .@last_x[0], .@last_y[0];
 		end;
 	case 6:
@@ -122,6 +123,7 @@ DoWarp:
 	.@last_x[0] = .@target_x;
 	.@last_y[0] = .@target_y;
 	specialeffect2 12; // Warp effect
+	close2;
 	warp .@target_map$, .@target_x, .@target_y;
 	end;
 }
