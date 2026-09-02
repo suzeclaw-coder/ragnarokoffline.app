@@ -1,0 +1,181 @@
+//=============================================================
+// Universal Job Master / Class Changer
+//=============================================================
+prontera,150,195,4	script	Job Master#prt	4_M_JOB_KNIGHT2,{
+	mes "[Job Master]";
+	mes "Welcome, " + strcharinfo(0) + "!";
+	mes "I can promote you to your next class, maximize your job level, or change you to any class.";
+	next;
+
+	switch(select("~ Advance to Next Class:~ Pick Any 3rd / 4th Class:~ Rebirth / Transcendent:~ Max Job Level & Skills:~ Cancel")) {
+	case 1:
+		mes "[Job Master]";
+		mes "Select your desired path:";
+		next;
+		// 1st Jobs
+		if (Class == Job_Novice || Class == Job_Novice_High) {
+			switch(select("Swordsman:Mage:Archer:Acolyte:Merchant:Thief:Super Novice:Taekwon:Gunslinger:Ninja:Doram (Summoner)")) {
+				case 1: callsub DoJob, Job_Swordman;
+				case 2: callsub DoJob, Job_Mage;
+				case 3: callsub DoJob, Job_Archer;
+				case 4: callsub DoJob, Job_Acolyte;
+				case 5: callsub DoJob, Job_Merchant;
+				case 6: callsub DoJob, Job_Thief;
+				case 7: callsub DoJob, Job_SuperNovice;
+				case 8: callsub DoJob, Job_Taekwon;
+				case 9: callsub DoJob, Job_Gunslinger;
+				case 10: callsub DoJob, Job_Ninja;
+				case 11: callsub DoJob, Job_Summoner;
+			}
+		}
+		// 2nd Jobs
+		else if (Class == Job_Swordman || Class == Job_Swordman_High) {
+			switch(select("Knight:Crusader")) {
+				case 1: callsub DoJob, (Class == Job_Swordman_High ? Job_Lord_Knight : Job_Knight);
+				case 2: callsub DoJob, (Class == Job_Swordman_High ? Job_Paladin : Job_Crusader);
+			}
+		}
+		else if (Class == Job_Mage || Class == Job_Mage_High) {
+			switch(select("Wizard:Sage")) {
+				case 1: callsub DoJob, (Class == Job_Mage_High ? Job_High_Wizard : Job_Wizard);
+				case 2: callsub DoJob, (Class == Job_Mage_High ? Job_Professor : Job_Sage);
+			}
+		}
+		else if (Class == Job_Archer || Class == Job_Archer_High) {
+			if (Sex == SEX_MALE) {
+				switch(select("Hunter:Bard (Clown)")) {
+					case 1: callsub DoJob, (Class == Job_Archer_High ? Job_Sniper : Job_Hunter);
+					case 2: callsub DoJob, (Class == Job_Archer_High ? Job_Clown : Job_Bard);
+				}
+			} else {
+				switch(select("Hunter:Dancer (Gypsy)")) {
+					case 1: callsub DoJob, (Class == Job_Archer_High ? Job_Sniper : Job_Hunter);
+					case 2: callsub DoJob, (Class == Job_Archer_High ? Job_Gypsy : Job_Dancer);
+				}
+			}
+		}
+		else if (Class == Job_Acolyte || Class == Job_Acolyte_High) {
+			switch(select("Priest:Monk")) {
+				case 1: callsub DoJob, (Class == Job_Acolyte_High ? Job_High_Priest : Job_Priest);
+				case 2: callsub DoJob, (Class == Job_Acolyte_High ? Job_Champion : Job_Monk);
+			}
+		}
+		else if (Class == Job_Merchant || Class == Job_Merchant_High) {
+			switch(select("Blacksmith:Alchemist")) {
+				case 1: callsub DoJob, (Class == Job_Merchant_High ? Job_Whitesmith : Job_Blacksmith);
+				case 2: callsub DoJob, (Class == Job_Merchant_High ? Job_Creator : Job_Alchemist);
+			}
+		}
+		else if (Class == Job_Thief || Class == Job_Thief_High) {
+			switch(select("Assassin:Rogue")) {
+				case 1: callsub DoJob, (Class == Job_Thief_High ? Job_Assassin_Cross : Job_Assassin);
+				case 2: callsub DoJob, (Class == Job_Thief_High ? Job_Stalker : Job_Rogue);
+			}
+		}
+		// 3rd Jobs
+		else if (Class == Job_Knight || Class == Job_Lord_Knight) callsub DoJob, Job_Rune_Knight;
+		else if (Class == Job_Crusader || Class == Job_Paladin) callsub DoJob, Job_Royal_Guard;
+		else if (Class == Job_Wizard || Class == Job_High_Wizard) callsub DoJob, Job_Warlock;
+		else if (Class == Job_Sage || Class == Job_Professor) callsub DoJob, Job_Sorcerer;
+		else if (Class == Job_Hunter || Class == Job_Sniper) callsub DoJob, Job_Ranger;
+		else if (Class == Job_Bard || Class == Job_Clown) callsub DoJob, Job_Minstrel;
+		else if (Class == Job_Dancer || Class == Job_Gypsy) callsub DoJob, Job_Wanderer;
+		else if (Class == Job_Priest || Class == Job_High_Priest) callsub DoJob, Job_Arch_Bishop;
+		else if (Class == Job_Monk || Class == Job_Champion) callsub DoJob, Job_Sura;
+		else if (Class == Job_Blacksmith || Class == Job_Whitesmith) callsub DoJob, Job_Mechanic;
+		else if (Class == Job_Alchemist || Class == Job_Creator) callsub DoJob, Job_Genetic;
+		else if (Class == Job_Assassin || Job_Assassin_Cross) callsub DoJob, Job_Guillotine_Cross;
+		else if (Class == Job_Rogue || Job_Stalker) callsub DoJob, Job_Shadow_Chaser;
+		// 4th Jobs
+		else if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T) callsub DoJob, Job_Dragon_Knight;
+		else if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T) callsub DoJob, Job_Imperial_Guard;
+		else if (Class == Job_Warlock || Class == Job_Warlock_T) callsub DoJob, Job_Arch_Mage;
+		else if (Class == Job_Sorcerer || Class == Job_Sorcerer_T) callsub DoJob, Job_Elemental_Master;
+		else if (Class == Job_Ranger || Class == Job_Ranger_T) callsub DoJob, Job_Wind_Hawk;
+		else if (Class == Job_Minstrel || Class == Job_Minstrel_T) callsub DoJob, Job_Troubadour;
+		else if (Class == Job_Wanderer || Class == Job_Wanderer_T) callsub DoJob, Job_Trouvere;
+		else if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T) callsub DoJob, Job_Cardinal;
+		else if (Class == Job_Sura || Class == Job_Sura_T) callsub DoJob, Job_Inquisitor;
+		else if (Class == Job_Mechanic || Class == Job_Mechanic_T) callsub DoJob, Job_Meister;
+		else if (Class == Job_Genetic || Class == Job_Genetic_T) callsub DoJob, Job_Biolo;
+		else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) callsub DoJob, Job_Shadow_Cross;
+		else if (Class == Job_Shadow_Chaser || Class == Job_Shadow_Chaser_T) callsub DoJob, Job_Abyss_Chaser;
+		else {
+			mes "[Job Master]";
+			mes "You have already reached the highest tier for your class!";
+			close;
+		}
+		break;
+	case 2:
+		mes "[3rd & 4th Classes]";
+		mes "Select your desired 3rd or 4th class:";
+		next;
+		switch(select("Rune Knight:Dragon Knight:Royal Guard:Imperial Guard:Warlock:Arch Mage:Sorcerer:Elemental Master:Ranger:Wind Hawk:Arch Bishop:Cardinal:Sura:Inquisitor:Mechanic:Meister:Genetic:Biolo:Guillotine Cross:Shadow Cross:Shadow Chaser:Abyss Chaser:Star Emperor:Soul Reaper:Night Watch:Shinkiro / Shiranui:Hyper Novice:Spirit Handler")) {
+			case 1: callsub DoJob, Job_Rune_Knight;
+			case 2: callsub DoJob, Job_Dragon_Knight;
+			case 3: callsub DoJob, Job_Royal_Guard;
+			case 4: callsub DoJob, Job_Imperial_Guard;
+			case 5: callsub DoJob, Job_Warlock;
+			case 6: callsub DoJob, Job_Arch_Mage;
+			case 7: callsub DoJob, Job_Sorcerer;
+			case 8: callsub DoJob, Job_Elemental_Master;
+			case 9: callsub DoJob, Job_Ranger;
+			case 10: callsub DoJob, Job_Wind_Hawk;
+			case 11: callsub DoJob, Job_Arch_Bishop;
+			case 12: callsub DoJob, Job_Cardinal;
+			case 13: callsub DoJob, Job_Sura;
+			case 14: callsub DoJob, Job_Inquisitor;
+			case 15: callsub DoJob, Job_Mechanic;
+			case 16: callsub DoJob, Job_Meister;
+			case 17: callsub DoJob, Job_Genetic;
+			case 18: callsub DoJob, Job_Biolo;
+			case 19: callsub DoJob, Job_Guillotine_Cross;
+			case 20: callsub DoJob, Job_Shadow_Cross;
+			case 21: callsub DoJob, Job_Shadow_Chaser;
+			case 22: callsub DoJob, Job_Abyss_Chaser;
+			case 23: callsub DoJob, Job_Star_Emperor;
+			case 24: callsub DoJob, Job_Soul_Reaper;
+			case 25: callsub DoJob, Job_Night_Watch;
+			case 26: callsub DoJob, (Sex == SEX_MALE ? Job_Shinkiro : Job_Shiranui);
+			case 27: callsub DoJob, Job_Hyper_Novice;
+			case 28: callsub DoJob, Job_Spirit_Handler;
+		}
+		break;
+	case 3:
+		mes "[Rebirth]";
+		mes "Rebirthing will restart you as a High Novice with bonus stat points and unlock Transcendent classes.";
+		next;
+		if (select("Proceed with Rebirth:Cancel") == 1) {
+			jobchange Job_Novice_High;
+			resetlvl 3;
+			specialeffect2 154;
+			message strcharinfo(0), "You have been reborn as a High Novice!";
+		}
+		break;
+	case 4:
+		JobLevel = 70;
+		allskill;
+		specialeffect2 154;
+		message strcharinfo(0), "Job Level maximized and all skills unlocked!";
+		break;
+	case 5:
+		close;
+	}
+	end;
+
+DoJob:
+	.@target_job = getarg(0);
+	jobchange .@target_job;
+	allskill;
+	specialeffect2 154;
+	message strcharinfo(0), "Congratulations! You have changed job successfully!";
+	close;
+}
+
+// Spawns across towns
+morocc,153,96,4	duplicate(Job Master#prt)	Job Master#mor	4_M_JOB_KNIGHT2
+geffen,114,62,4	duplicate(Job Master#prt)	Job Master#gef	4_M_JOB_KNIGHT2
+payon,154,234,4	duplicate(Job Master#prt)	Job Master#pay	4_M_JOB_KNIGHT2
+alberta,22,234,4	duplicate(Job Master#prt)	Job Master#alb	4_M_JOB_KNIGHT2
+izlude,122,118,4	duplicate(Job Master#prt)	Job Master#izl	4_M_JOB_KNIGHT2
+yuno,155,183,4	duplicate(Job Master#prt)	Job Master#yuno	4_M_JOB_KNIGHT2

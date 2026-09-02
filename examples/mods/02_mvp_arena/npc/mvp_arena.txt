@@ -1,0 +1,216 @@
+//=============================================================
+// MVP Boss Summoning Arena Mod
+//=============================================================
+
+// Map flags for arenas
+pvp_y_1-1	mapflag	nomemo
+pvp_y_1-1	mapflag	nosave	prontera,156,191
+pvp_y_1-1	mapflag	nobranch
+pvp_y_1-1	mapflag	pvp	off
+
+pvp_n_1-1	mapflag	nomemo
+pvp_n_1-1	mapflag	nosave	prontera,156,191
+pvp_n_1-1	mapflag	nobranch
+pvp_n_1-1	mapflag	pvp	off
+
+guild_vs1	mapflag	nomemo
+guild_vs1	mapflag	nosave	prontera,156,191
+guild_vs1	mapflag	nobranch
+guild_vs1	mapflag	pvp	off
+
+guild_vs2	mapflag	nomemo
+guild_vs2	mapflag	nosave	prontera,156,191
+guild_vs2	mapflag	nobranch
+guild_vs2	mapflag	pvp	off
+
+//-------------------------------------------------------------
+// Town Arena Attendant
+//-------------------------------------------------------------
+prontera,138,195,4	script	MVP Arena Guide#prt	4_M_KNIGHT_BLACK,{
+	mes "[MVP Arena Guide]";
+	mes "Welcome, " + strcharinfo(0) + "!";
+	mes "Select an arena chamber to summon and fight MVP bosses:";
+	next;
+	switch(select("~ Arena 1: Grand Colosseum (Yuno Marble Hall):~ Arena 2: Prontera Combat Arena:~ Arena 3: Guild Battleground 1:~ Arena 4: Guild Battleground 2:~ Cancel")) {
+	case 1:
+		specialeffect2 12;
+		warp "pvp_y_1-1", 100, 95;
+		end;
+	case 2:
+		specialeffect2 12;
+		warp "pvp_n_1-1", 100, 95;
+		end;
+	case 3:
+		specialeffect2 12;
+		warp "guild_vs1", 10, 50;
+		end;
+	case 4:
+		specialeffect2 12;
+		warp "guild_vs2", 10, 50;
+		end;
+	case 5:
+		close;
+	}
+	end;
+}
+
+// Town duplicates
+morocc,141,96,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#mor	4_M_KNIGHT_BLACK
+geffen,102,62,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#gef	4_M_KNIGHT_BLACK
+payon,142,234,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#pay	4_M_KNIGHT_BLACK
+alberta,10,234,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#alb	4_M_KNIGHT_BLACK
+izlude,110,118,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#izl	4_M_KNIGHT_BLACK
+yuno,152,183,4	duplicate(MVP Arena Guide#prt)	MVP Arena Guide#yuno	4_M_KNIGHT_BLACK
+
+//-------------------------------------------------------------
+// Arena Boss Summoning Obelisk (Inside Arena)
+//-------------------------------------------------------------
+pvp_y_1-1,100,97,4	script	Boss Summoner#y1	4_ENERGY_ORB,{
+	.@map$ = "pvp_y_1-1";
+	.@spawn_x = 100;
+	.@spawn_y = 110;
+	callsub MainMenu, .@map$, .@spawn_x, .@spawn_y;
+	end;
+
+MainMenu:
+	.@map$ = getarg(0);
+	.@sx = getarg(1);
+	.@sy = getarg(2);
+	mes "[Boss Summoner]";
+	mes "Choose an MVP Boss to summon into the arena:";
+	next;
+	switch(select("~ Tier 1: Classic MVPs:~ Tier 2: Advanced MVPs:~ Tier 3: Endgame / God MVPs:~ Summon by Custom Monster ID:~ Clear Arena (Despawn All):~ Full Heal & Buffs:~ Return to Prontera:~ Cancel")) {
+	case 1:
+		mes "[Tier 1: Classic MVPs]";
+		mes "Select a boss:";
+		next;
+		switch(select("Golden Thief Bug (GTB):Eddga:Moonlight Flower:Maya:Phreeoni:Orc Hero:Orc Lord:Drake:Mistress:Pharaoh:Osiris:Doppelganger:Angeling / Deviling / Ghostring / Mastering")) {
+			case 1: callsub SummonMob, .@map$, .@sx, .@sy, 1086, "Golden Thief Bug";
+			case 2: callsub SummonMob, .@map$, .@sx, .@sy, 1115, "Eddga";
+			case 3: callsub SummonMob, .@map$, .@sx, .@sy, 1150, "Moonlight Flower";
+			case 4: callsub SummonMob, .@map$, .@sx, .@sy, 1147, "Maya";
+			case 5: callsub SummonMob, .@map$, .@sx, .@sy, 1159, "Phreeoni";
+			case 6: callsub SummonMob, .@map$, .@sx, .@sy, 1087, "Orc Hero";
+			case 7: callsub SummonMob, .@map$, .@sx, .@sy, 1190, "Orc Lord";
+			case 8: callsub SummonMob, .@map$, .@sx, .@sy, 1112, "Drake";
+			case 9: callsub SummonMob, .@map$, .@sx, .@sy, 1059, "Mistress";
+			case 10: callsub SummonMob, .@map$, .@sx, .@sy, 1157, "Pharaoh";
+			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1038, "Osiris";
+			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1046, "Doppelganger";
+			case 13:
+				monster .@map$, .@sx, .@sy, "--ja--", 1096, 1; // Angeling
+				monster .@map$, .@sx+2, .@sy, "--ja--", 1582, 1; // Deviling
+				monster .@map$, .@sx-2, .@sy, "--ja--", 1120, 1; // Ghostring
+				monster .@map$, .@sx, .@sy+2, "--ja--", 1090, 1; // Mastering
+				specialeffect2 154;
+				message strcharinfo(0), "Super Porings have arrived!";
+				close;
+		}
+		break;
+
+	case 2:
+		mes "[Tier 2: Advanced MVPs]";
+		mes "Select a boss:";
+		next;
+		switch(select("Baphomet:Dark Lord:Lord of Death:Stormy Knight:Garm (Hatii):Evil Snake Lord:Incantation Samurai:Turtle General:Tao Gunka:RSX 0806:Amon Ra:Lady Tanee:Atroce:Ktullanux")) {
+			case 1: callsub SummonMob, .@map$, .@sx, .@sy, 1039, "Baphomet";
+			case 2: callsub SummonMob, .@map$, .@sx, .@sy, 1272, "Dark Lord";
+			case 3: callsub SummonMob, .@map$, .@sx, .@sy, 1373, "Lord of Death";
+			case 4: callsub SummonMob, .@map$, .@sx, .@sy, 1252, "Stormy Knight";
+			case 5: callsub SummonMob, .@map$, .@sx, .@sy, 1251, "Garm";
+			case 6: callsub SummonMob, .@map$, .@sx, .@sy, 1418, "Evil Snake Lord";
+			case 7: callsub SummonMob, .@map$, .@sx, .@sy, 1492, "Incantation Samurai";
+			case 8: callsub SummonMob, .@map$, .@sx, .@sy, 1312, "Turtle General";
+			case 9: callsub SummonMob, .@map$, .@sx, .@sy, 1583, "Tao Gunka";
+			case 10: callsub SummonMob, .@map$, .@sx, .@sy, 1623, "RSX 0806";
+			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1511, "Amon Ra";
+			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1688, "Lady Tanee";
+			case 13: callsub SummonMob, .@map$, .@sx, .@sy, 1785, "Atroce";
+			case 14: callsub SummonMob, .@map$, .@sx, .@sy, 1779, "Ktullanux";
+		}
+		break;
+
+	case 3:
+		mes "[Tier 3: Endgame / God MVPs]";
+		mes "Select a boss:";
+		next;
+		switch(select("Valkyrie Randgris:Ifrit:Beelzebub:Fallen Bishop Hibram:Gloom Under Night:Kiel D-01:Nidhoggur's Shadow:Memory of Thanatos:Naght Sieger:Detale:Egnigem Cenia (Biolab):Wounded Morocc")) {
+			case 1: callsub SummonMob, .@map$, .@sx, .@sy, 1751, "Valkyrie Randgris";
+			case 2: callsub SummonMob, .@map$, .@sx, .@sy, 1832, "Ifrit";
+			case 3: callsub SummonMob, .@map$, .@sx, .@sy, 1874, "Beelzebub";
+			case 4: callsub SummonMob, .@map$, .@sx, .@sy, 1871, "Fallen Bishop Hibram";
+			case 5: callsub SummonMob, .@map$, .@sx, .@sy, 1768, "Gloom Under Night";
+			case 6: callsub SummonMob, .@map$, .@sx, .@sy, 1734, "Kiel D-01";
+			case 7: callsub SummonMob, .@map$, .@sx, .@sy, 2022, "Nidhoggur's Shadow";
+			case 8: callsub SummonMob, .@map$, .@sx, .@sy, 1708, "Memory of Thanatos";
+			case 9: callsub SummonMob, .@map$, .@sx, .@sy, 1957, "Naght Sieger";
+			case 10: callsub SummonMob, .@map$, .@sx, .@sy, 1719, "Detale";
+			case 11: callsub SummonMob, .@map$, .@sx, .@sy, 1658, "Egnigem Cenia";
+			case 12: callsub SummonMob, .@map$, .@sx, .@sy, 1917, "Wounded Morocc";
+		}
+		break;
+
+	case 4:
+		mes "[Custom Monster Summon]";
+		mes "Enter the Monster ID number (e.g. 1039 for Baphomet, 1751 for Valkyrie):";
+		next;
+		input .@mob_id, 1001, 3500;
+		callsub SummonMob, .@map$, .@sx, .@sy, .@mob_id, "Monster #" + .@mob_id;
+		break;
+
+	case 5:
+		killmonster .@map$, "All";
+		specialeffect2 154;
+		message strcharinfo(0), "All arena monsters have been cleared!";
+		close;
+
+	case 6:
+		percentheal 100, 100;
+		sc_start SC_BLESSING, 3600000, 10;
+		sc_start SC_INC_AGI, 3600000, 10;
+		sc_start SC_KYRIE, 3600000, 10;
+		sc_start SC_MAGNIFICAT, 3600000, 5;
+		repairall;
+		specialeffect2 20;
+		message strcharinfo(0), "Full HP/SP and buffs applied!";
+		close;
+
+	case 7:
+		specialeffect2 12;
+		warp "prontera", 156, 191;
+		end;
+
+	case 8:
+		close;
+	}
+	end;
+
+SummonMob:
+	.@target_map$ = getarg(0);
+	.@mx = getarg(1);
+	.@my = getarg(2);
+	.@mob_id = getarg(3);
+	.@mob_name$ = getarg(4);
+	monster .@target_map$, .@mx, .@my, "--ja--", .@mob_id, 1;
+	specialeffect2 154;
+	message strcharinfo(0), .@mob_name$ + " has been summoned into the arena!";
+	close;
+}
+
+// Prontera Arena Obelisk
+pvp_n_1-1,100,97,4	script	Boss Summoner#n1	4_ENERGY_ORB,{
+	callsub BossSummoner#y1::MainMenu, "pvp_n_1-1", 100, 110;
+	end;
+}
+
+// Guild Arena 1 Obelisk
+guild_vs1,12,50,4	script	Boss Summoner#g1	4_ENERGY_ORB,{
+	callsub BossSummoner#y1::MainMenu, "guild_vs1", 25, 50;
+	end;
+}
+
+// Guild Arena 2 Obelisk
+guild_vs2,12,50,4	script	Boss Summoner#g2	4_ENERGY_ORB,{
+	callsub BossSummoner#y1::MainMenu, "guild_vs2", 25, 50;
+	end;
+}

@@ -1,0 +1,60 @@
+//=============================================================
+// Wise Card Remover (100% Safe)
+//=============================================================
+prontera,141,195,4	script	Card Remover#prt	4_M_SAGE_OLD,{
+	mes "[Card Remover]";
+	mes "Greetings, adventurer! I can safely extract all slotted cards from your equipped gear without destroying anything.";
+	next;
+	mes "[Card Remover]";
+	mes "Select which equipped gear you want to remove cards from:";
+	next;
+	.@pos = select("~ Top Headgear:~ Armor:~ Right Hand (Weapon):~ Left Hand (Shield/Weapon):~ Garment:~ Shoes:~ Accessory 1:~ Accessory 2:~ Cancel");
+	if (.@pos == 9) close;
+
+	switch(.@pos) {
+		case 1: .@eqp = EQI_HEAD_TOP; break;
+		case 2: .@eqp = EQI_ARMOR; break;
+		case 3: .@eqp = EQI_HAND_R; break;
+		case 4: .@eqp = EQI_HAND_L; break;
+		case 5: .@eqp = EQI_GARMENT; break;
+		case 6: .@eqp = EQI_SHOES; break;
+		case 7: .@eqp = EQI_ACC_R; break;
+		case 8: .@eqp = EQI_ACC_L; break;
+	}
+
+	if (!getequipisequiped(.@eqp)) {
+		mes "[Card Remover]";
+		mes "You don't have anything equipped in that slot!";
+		close;
+	}
+
+	.@card_count = 0;
+	for (.@i = 0; .@i < 4; .@i++) {
+		if (getequipcardid(.@eqp, .@i))
+			.@card_count++;
+	}
+
+	if (.@card_count == 0) {
+		mes "[Card Remover]";
+		mes "There are no cards slotted in your " + getequipname(.@eqp) + "!";
+		close;
+	}
+
+	mes "[Card Remover]";
+	mes "I found " + .@card_count + " card(s) in your " + getequipname(.@eqp) + ".";
+	mes "Would you like to extract them now?";
+	next;
+	if (select("Yes, remove cards safely:Cancel") == 1) {
+		successremovecards .@eqp;
+		specialeffect2 154;
+		mes "[Card Remover]";
+		mes "The cards have been safely removed and placed in your inventory!";
+	}
+	close;
+}
+
+morocc,144,96,4	duplicate(Card Remover#prt)	Card Remover#mor	4_M_SAGE_OLD
+geffen,105,62,4	duplicate(Card Remover#prt)	Card Remover#gef	4_M_SAGE_OLD
+payon,145,234,4	duplicate(Card Remover#prt)	Card Remover#pay	4_M_SAGE_OLD
+alberta,13,234,4	duplicate(Card Remover#prt)	Card Remover#alb	4_M_SAGE_OLD
+izlude,113,118,4	duplicate(Card Remover#prt)	Card Remover#izl	4_M_SAGE_OLD

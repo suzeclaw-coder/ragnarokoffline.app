@@ -1,0 +1,44 @@
+//=============================================================
+// Universal Healer & Buffer
+//=============================================================
+prontera,156,195,4	script	Healer & Buffer#prt	4_F_NURSE,{
+	percentheal 100,100;
+	sc_end SC_POISON;
+	sc_end SC_SILENCE;
+	sc_end SC_CURSE;
+	sc_end SC_STONE;
+	sc_end SC_BLEEDING;
+	sc_end SC_BLIND;
+	sc_end SC_CONFUSION;
+	sc_end SC_HALLUCINATION;
+
+	sc_start SC_BLESSING, 3600000, 10;
+	sc_start SC_INC_AGI, 3600000, 10;
+	sc_start SC_KYRIE, 3600000, 10;
+	sc_start SC_MAGNIFICAT, 3600000, 5;
+	sc_start SC_ANGELUS, 3600000, 10;
+	sc_start SC_WINDWALK, 3600000, 10;
+
+	repairall;
+	specialeffect2 20; // Heal
+	specialeffect2 37; // Blessing
+	specialeffect2 42; // Inc AGI
+	message strcharinfo(0), "You are fully healed, buffed, and equipment repaired!";
+	end;
+}
+
+// Duplicate spawns in other major towns
+morocc,159,96,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#mor	4_F_NURSE
+geffen,120,62,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#gef	4_F_NURSE
+payon,160,234,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#pay	4_F_NURSE
+alberta,28,234,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#alb	4_F_NURSE
+izlude,128,118,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#izl	4_F_NURSE
+aldebaran,140,119,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#ald	4_F_NURSE
+xmas,143,136,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#xmas	4_F_NURSE
+comodo,188,162,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#com	4_F_NURSE
+yuno,164,183,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#yuno	4_F_NURSE
+rachel,130,110,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#rac	4_F_NURSE
+lighthalzen,158,100,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#lhz	4_F_NURSE
+einbroch,242,205,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#ein	4_F_NURSE
+hugel,96,145,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#hug	4_F_NURSE
+veins,216,123,4	duplicate(Healer & Buffer#prt)	Healer & Buffer#vei	4_F_NURSE

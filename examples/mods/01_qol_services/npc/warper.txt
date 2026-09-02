@@ -1,0 +1,143 @@
+//=============================================================
+// Universal Warper
+//=============================================================
+prontera,153,195,4	script	Universal Warper#prt	4_M_JOB_WIZARD,{
+	mes "[Universal Warper]";
+	mes "Where would you like to travel today?";
+	next;
+	switch(select("~ Major Towns:~ Leveling Dungeons:~ Leveling Fields:~ Guild Castles:~ Last Destination" + (.@last_map$[0] != "" ? " (" + .@last_map$[0] + ")" : "") + ":~ Cancel")) {
+	case 1:
+		mes "[Major Towns]";
+		mes "Select a town:";
+		next;
+		switch(select("Prontera:Morocc:Geffen:Payon:Alberta:Izlude:Al De Baran:Lutie (Xmas):Comodo:Yuno:Amatsu:Gonryun:Umbala:Nifflheim:Louyang:Ayothaya:Einbroch:Lighthalzen:Hugel:Rachel:Veins:Moscovia:Brasilis:Malaya:Eclage:Lasagna")) {
+			case 1: callsub DoWarp, "prontera", 156, 191;
+			case 2: callsub DoWarp, "morocc", 156, 93;
+			case 3: callsub DoWarp, "geffen", 119, 59;
+			case 4: callsub DoWarp, "payon", 162, 233;
+			case 5: callsub DoWarp, "alberta", 28, 234;
+			case 6: callsub DoWarp, "izlude", 128, 114;
+			case 7: callsub DoWarp, "aldebaran", 140, 115;
+			case 8: callsub DoWarp, "xmas", 147, 136;
+			case 9: callsub DoWarp, "comodo", 188, 160;
+			case 10: callsub DoWarp, "yuno", 158, 182;
+			case 11: callsub DoWarp, "amatsu", 198, 84;
+			case 12: callsub DoWarp, "gonryun", 160, 120;
+			case 13: callsub DoWarp, "umbala", 128, 134;
+			case 14: callsub DoWarp, "nifflheim", 202, 180;
+			case 15: callsub DoWarp, "louyang", 217, 100;
+			case 16: callsub DoWarp, "ayothaya", 150, 164;
+			case 17: callsub DoWarp, "einbroch", 242, 200;
+			case 18: callsub DoWarp, "lighthalzen", 158, 92;
+			case 19: callsub DoWarp, "hugel", 96, 145;
+			case 20: callsub DoWarp, "rachel", 130, 110;
+			case 21: callsub DoWarp, "veins", 216, 123;
+			case 22: callsub DoWarp, "moscovia", 223, 184;
+			case 23: callsub DoWarp, "brasilis", 197, 221;
+			case 24: callsub DoWarp, "malaya", 212, 206;
+			case 25: callsub DoWarp, "eclage", 110, 39;
+			case 26: callsub DoWarp, "lasagna", 193, 182;
+		}
+		break;
+	case 2:
+		mes "[Dungeons]";
+		mes "Select a dungeon:";
+		next;
+		switch(select("Culvert (Sewers):Ant Hell:Payon Cave:Orc Dungeon:Geffen Dungeon:Byalan (Underwater):Pyramids:Sphinx:Clock Tower:Glast Heim:Sunken Ship:Coal Mine:Turtle Island:Magma Dungeon:Ice Dungeon:Juperos:Thanatos Tower:Cursed Abbey:Thor Volcano:Lighthalzen Biolab:Abyss Lake:Toy Factory:Nameless Island:Rachel Sanctuary:Kiel Dungeon:Einbech Dungeon:Odin Temple")) {
+			case 1: callsub DoWarp, "prt_sewb1", 120, 240;
+			case 2: callsub DoWarp, "anthell01", 34, 263;
+			case 3: callsub DoWarp, "pay_dun00", 22, 175;
+			case 4: callsub DoWarp, "orcsdun01", 188, 32;
+			case 5: callsub DoWarp, "gef_dun00", 106, 100;
+			case 6: callsub DoWarp, "iz_dun00", 168, 168;
+			case 7: callsub DoWarp, "moc_pryd01", 192, 9;
+			case 8: callsub DoWarp, "in_sphinx1", 147, 14;
+			case 9: callsub DoWarp, "c_tower1", 199, 159;
+			case 10: callsub DoWarp, "glast_01", 200, 200;
+			case 11: callsub DoWarp, "treasure01", 69, 24;
+			case 12: callsub DoWarp, "mjo_dun01", 52, 17;
+			case 13: callsub DoWarp, "tur_dun01", 154, 49;
+			case 14: callsub DoWarp, "mag_dun01", 126, 70;
+			case 15: callsub DoWarp, "ice_dun01", 154, 12;
+			case 16: callsub DoWarp, "juperos_01", 141, 164;
+			case 17: callsub DoWarp, "tha_t01", 150, 150;
+			case 18: callsub DoWarp, "abbey01", 50, 14;
+			case 19: callsub DoWarp, "thor_v01", 20, 225;
+			case 20: callsub DoWarp, "lhz_dun01", 150, 150;
+			case 21: callsub DoWarp, "abyss_01", 257, 273;
+			case 22: callsub DoWarp, "xmas_dun01", 207, 13;
+			case 23: callsub DoWarp, "nameless_n", 256, 215;
+			case 24: callsub DoWarp, "ra_san01", 140, 10;
+			case 25: callsub DoWarp, "kh_dun01", 28, 226;
+			case 26: callsub DoWarp, "ein_dun01", 135, 18;
+			case 27: callsub DoWarp, "odin_tem01", 100, 145;
+		}
+		break;
+	case 3:
+		mes "[Leveling Fields]";
+		mes "Select a field map:";
+		next;
+		switch(select("Prontera Culvert Field (Poring/Fabre):Prontera Field (Rockers):Payon Field (Smokie/Spore):Geffen Field (Kobolds):Morocc Desert (Wolves):Orc Village (Orcs):Glast Heim Entrance:Rachel Field (Desert Wolves):Rachel Field (Droseras):El Dicastes Field (Scaraba)")) {
+			case 1: callsub DoWarp, "prt_fild08", 170, 360;
+			case 2: callsub DoWarp, "prt_fild07", 200, 200;
+			case 3: callsub DoWarp, "pay_fild01", 150, 150;
+			case 4: callsub DoWarp, "gef_fild08", 180, 180;
+			case 5: callsub DoWarp, "moc_fild01", 150, 150;
+			case 6: callsub DoWarp, "gef_fild10", 70, 330;
+			case 7: callsub DoWarp, "gef_fild02", 180, 180;
+			case 8: callsub DoWarp, "ra_fild01", 200, 200;
+			case 9: callsub DoWarp, "ra_fild12", 150, 150;
+			case 10: callsub DoWarp, "dic_fild01", 150, 150;
+		}
+		break;
+	case 4:
+		mes "[Guild Castles]";
+		mes "Select a realm:";
+		next;
+		switch(select("Prontera Realm (Valkyrie):Geffen Realm (Britoniah):Al De Baran Realm (Luina):Payon Realm (Greenwood)")) {
+			case 1: callsub DoWarp, "prt_gld", 150, 150;
+			case 2: callsub DoWarp, "gef_fild13", 150, 150;
+			case 3: callsub DoWarp, "alde_gld", 150, 150;
+			case 4: callsub DoWarp, "pay_gld", 150, 150;
+		}
+		break;
+	case 5:
+		if (.@last_map$[0] == "") {
+			mes "[Universal Warper]";
+			mes "You haven't warped anywhere yet!";
+			close;
+		}
+		warp .@last_map$[0], .@last_x[0], .@last_y[0];
+		end;
+	case 6:
+		close;
+	}
+	end;
+
+DoWarp:
+	.@target_map$ = getarg(0);
+	.@target_x = getarg(1);
+	.@target_y = getarg(2);
+	.@last_map$[0] = .@target_map$;
+	.@last_x[0] = .@target_x;
+	.@last_y[0] = .@target_y;
+	specialeffect2 12; // Warp effect
+	warp .@target_map$, .@target_x, .@target_y;
+	end;
+}
+
+// Duplicates across towns
+morocc,156,96,4	duplicate(Universal Warper#prt)	Universal Warper#mor	4_M_JOB_WIZARD
+geffen,117,62,4	duplicate(Universal Warper#prt)	Universal Warper#gef	4_M_JOB_WIZARD
+payon,157,234,4	duplicate(Universal Warper#prt)	Universal Warper#pay	4_M_JOB_WIZARD
+alberta,25,234,4	duplicate(Universal Warper#prt)	Universal Warper#alb	4_M_JOB_WIZARD
+izlude,125,118,4	duplicate(Universal Warper#prt)	Universal Warper#izl	4_M_JOB_WIZARD
+aldebaran,137,119,4	duplicate(Universal Warper#prt)	Universal Warper#ald	4_M_JOB_WIZARD
+xmas,140,136,4	duplicate(Universal Warper#prt)	Universal Warper#xmas	4_M_JOB_WIZARD
+comodo,185,162,4	duplicate(Universal Warper#prt)	Universal Warper#com	4_M_JOB_WIZARD
+yuno,161,183,4	duplicate(Universal Warper#prt)	Universal Warper#yuno	4_M_JOB_WIZARD
+rachel,127,110,4	duplicate(Universal Warper#prt)	Universal Warper#rac	4_M_JOB_WIZARD
+lighthalzen,155,100,4	duplicate(Universal Warper#prt)	Universal Warper#lhz	4_M_JOB_WIZARD
+einbroch,239,205,4	duplicate(Universal Warper#prt)	Universal Warper#ein	4_M_JOB_WIZARD
+hugel,93,145,4	duplicate(Universal Warper#prt)	Universal Warper#hug	4_M_JOB_WIZARD
+veins,213,123,4	duplicate(Universal Warper#prt)	Universal Warper#vei	4_M_JOB_WIZARD

@@ -1,0 +1,82 @@
+//=============================================================
+// Universal Stylist
+//=============================================================
+prontera,144,195,4	script	Stylist#prt	4_F_01,{
+	mes "[Stylist]";
+	mes "Hello, handsome! Want to change your hair or clothing style?";
+	next;
+	switch(select("~ Change Hairstyle:~ Change Hair Color:~ Change Clothes Color:~ Reset to Default:~ Cancel")) {
+	case 1:
+		callsub MenuStyle, 1;
+		break;
+	case 2:
+		callsub MenuStyle, 2;
+		break;
+	case 3:
+		callsub MenuStyle, 3;
+		break;
+	case 4:
+		setlook 1, 1; // Hair Style
+		setlook 6, 0; // Hair Color
+		setlook 7, 0; // Cloth Color
+		specialeffect2 154;
+		message strcharinfo(0), "Look reset to default!";
+		break;
+	case 5:
+		close;
+	}
+	close;
+
+MenuStyle:
+	.@mode = getarg(0);
+	while (1) {
+		if (.@mode == 1) {
+			mes "[Hairstyle]";
+			mes "Current Hairstyle: " + getlook(1);
+			next;
+			switch(select("Next Style (+1):Previous Style (-1):Input Specific Style ID:Done")) {
+				case 1: setlook 1, (getlook(1) % 45) + 1; break;
+				case 2: setlook 1, (getlook(1) <= 1 ? 45 : getlook(1) - 1); break;
+				case 3:
+					input .@val, 1, 45;
+					setlook 1, .@val;
+					break;
+				case 4: return;
+			}
+		} else if (.@mode == 2) {
+			mes "[Hair Color]";
+			mes "Current Hair Color: " + getlook(6);
+			next;
+			switch(select("Next Color (+1):Previous Color (-1):Input Specific Color ID:Done")) {
+				case 1: setlook 6, (getlook(6) + 1) % 130; break;
+				case 2: setlook 6, (getlook(6) <= 0 ? 129 : getlook(6) - 1); break;
+				case 3:
+					input .@val, 0, 130;
+					setlook 6, .@val;
+					break;
+				case 4: return;
+			}
+		} else if (.@mode == 3) {
+			mes "[Cloth Dye]";
+			mes "Current Cloth Color: " + getlook(7);
+			next;
+			switch(select("Next Palette (+1):Previous Palette (-1):Input Specific Palette ID:Done")) {
+				case 1: setlook 7, (getlook(7) + 1) % 600; break;
+				case 2: setlook 7, (getlook(7) <= 0 ? 599 : getlook(7) - 1); break;
+				case 3:
+					input .@val, 0, 600;
+					setlook 7, .@val;
+					break;
+				case 4: return;
+			}
+		}
+		specialeffect2 154;
+	}
+	return;
+}
+
+morocc,147,96,4	duplicate(Stylist#prt)	Stylist#mor	4_F_01
+geffen,108,62,4	duplicate(Stylist#prt)	Stylist#gef	4_F_01
+payon,148,234,4	duplicate(Stylist#prt)	Stylist#pay	4_F_01
+alberta,16,234,4	duplicate(Stylist#prt)	Stylist#alb	4_F_01
+izlude,116,118,4	duplicate(Stylist#prt)	Stylist#izl	4_F_01

@@ -1,0 +1,36 @@
+//=============================================================
+// Stat & Skill Resetter
+//=============================================================
+prontera,147,195,4	script	Stat & Skill Resetter#prt	4_F_SISTER,{
+	mes "[Stat & Skill Resetter]";
+	mes "Hello " + strcharinfo(0) + "!";
+	mes "I can reset your stats or skill points completely free of charge.";
+	next;
+	switch(select("~ Reset Status Points:~ Reset Skill Points:~ Reset Both:~ Cancel")) {
+	case 1:
+		resetstatus;
+		specialeffect2 154;
+		message strcharinfo(0), "Your stat points have been refunded!";
+		break;
+	case 2:
+		resetskill;
+		specialeffect2 154;
+		message strcharinfo(0), "Your skill points have been refunded!";
+		break;
+	case 3:
+		resetstatus;
+		resetskill;
+		specialeffect2 154;
+		message strcharinfo(0), "Both stats and skills have been reset!";
+		break;
+	case 4:
+		close;
+	}
+	close;
+}
+
+morocc,150,96,4	duplicate(Stat & Skill Resetter#prt)	Stat & Skill Resetter#mor	4_F_SISTER
+geffen,111,62,4	duplicate(Stat & Skill Resetter#prt)	Stat & Skill Resetter#gef	4_F_SISTER
+payon,151,234,4	duplicate(Stat & Skill Resetter#prt)	Stat & Skill Resetter#pay	4_F_SISTER
+alberta,19,234,4	duplicate(Stat & Skill Resetter#prt)	Stat & Skill Resetter#alb	4_F_SISTER
+izlude,119,118,4	duplicate(Stat & Skill Resetter#prt)	Stat & Skill Resetter#izl	4_F_SISTER
